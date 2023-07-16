@@ -150,7 +150,7 @@ function loop(timestamp) {
     const deltaTime = timestamp - loop.previousTimestamp || 0;
     loop.previousTimestamp = timestamp;
 
-    pipeX -= 1.5 * (deltaTime / 16); // Adjust the speed based on deltaTime
+    pipeX -= 2.5 * (deltaTime / 16); // Adjust the speed based on deltaTime
 
     if (pipeX < -50) {
         pipeX = 400;
