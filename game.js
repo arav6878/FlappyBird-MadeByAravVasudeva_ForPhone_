@@ -14,7 +14,7 @@ const PIPE_GAP = 139;
 let birdX = 50;
 let birdY = 50;
 let birdVelocity = 0;
-let birdAcceleration = 1;
+let birdAcceleration = 100;
 
 let pipeX = 400;
 let pipeY = canvas.height - 200;
