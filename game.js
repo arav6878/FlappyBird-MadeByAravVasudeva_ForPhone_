@@ -4,7 +4,6 @@ const gameContainer = document.getElementById('game-container');
 
 const flappyImg = new Image();
 flappyImg.src = '/assets/flappy_dunk.png';
-flappyImg.addEventListener('load', startGame); // Wait for the image to load
 
 const FLAP_SPEED = -5;
 const BIRD_WIDTH = 40;
@@ -15,7 +14,7 @@ const PIPE_GAP = 139;
 let birdX = 50;
 let birdY = 50;
 let birdVelocity = 0;
-let birdAcceleration = 0.3;
+let birdAcceleration = 0.1;
 
 let pipeX = 400;
 let pipeY = canvas.height - 200;
@@ -117,7 +116,7 @@ function resetGame() {
     birdX = 50;
     birdY = 50;
     birdVelocity = 0;
-    birdAcceleration = 0.3;
+    birdAcceleration = 0.1;
 
     pipeX = 400;
     pipeY = canvas.height - 200;
@@ -154,17 +153,14 @@ function loop() {
         pipeY = Math.random() * (canvas.height - PIPE_GAP) + PIPE_WIDTH;
     }
 
-    const timeInterval = 16; // Time interval in milliseconds (60 FPS)
-    birdVelocity += birdAcceleration * (timeInterval / 1000); // Adjust acceleration based on the time interval
-    birdY += birdVelocity * (timeInterval / 1000); // Adjust velocity based on the time interval
+    birdVelocity += birdAcceleration;
+    birdY += birdVelocity;
 
     increaseScore();
     requestAnimationFrame(loop);
 }
 
-function startGame() {
-    loop();
-}
+loop();
 
 const canvas1 = document.querySelector('canvas');
 canvas1.addEventListener('touchstart', jump);
