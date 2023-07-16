@@ -3,7 +3,8 @@ const ctx = canvas.getContext('2d');
 const gameContainer = document.getElementById('game-container');
 
 const flappyImg = new Image();
-flappyImg.src = 'assets/flappy_dunk.png';
+flappyImg.src = '/assets/flappy_dunk.png';
+flappyImg.addEventListener('load', startGame); // Wait for the image to load
 
 const FLAP_SPEED = -5;
 const BIRD_WIDTH = 40;
@@ -14,7 +15,7 @@ const PIPE_GAP = 139;
 let birdX = 50;
 let birdY = 50;
 let birdVelocity = 0;
-let birdAcceleration = 100;
+let birdAcceleration = 0.3;
 
 let pipeX = 400;
 let pipeY = canvas.height - 200;
@@ -31,7 +32,7 @@ canvas.addEventListener('touchstart', jump);
 document.getElementById('restart-button').addEventListener('click', function () {
     hideEndMenu();
     resetGame();
-    loop();
+    loop(performance.now());
 });
 
 function increaseScore() {
@@ -116,7 +117,7 @@ function resetGame() {
     birdX = 50;
     birdY = 50;
     birdVelocity = 0;
-    birdAcceleration = 0.1;
+    birdAcceleration = 0.3;
 
     pipeX = 400;
     pipeY = canvas.height - 200;
@@ -132,7 +133,7 @@ function jump() {
     birdVelocity = FLAP_SPEED;
 }
 
-function loop() {
+function loop(timestamp) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     ctx.drawImage(flappyImg, birdX, birdY);
@@ -146,21 +147,26 @@ function loop() {
         return;
     }
 
-    pipeX -= 1.5;
+    const deltaTime = timestamp - loop.previousTimestamp || 0;
+    loop.previousTimestamp = timestamp;
+
+    pipeX -= 1.5 * (deltaTime / 16); // Adjust the speed based on deltaTime
 
     if (pipeX < -50) {
         pipeX = 400;
         pipeY = Math.random() * (canvas.height - PIPE_GAP) + PIPE_WIDTH;
     }
 
-    birdVelocity += birdAcceleration;
-    birdY += birdVelocity;
+    birdVelocity += birdAcceleration * (deltaTime / 16); // Adjust the acceleration based on deltaTime
+    birdY += birdVelocity * (deltaTime / 16); // Adjust the velocity based on deltaTime
 
     increaseScore();
     requestAnimationFrame(loop);
 }
 
-loop();
+function startGame() {
+    loop(performance.now());
+}
 
 const canvas1 = document.querySelector('canvas');
 canvas1.addEventListener('touchstart', jump);
