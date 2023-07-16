@@ -14,8 +14,8 @@ const PIPE_GAP = 139;
 
 let birdX = 50;
 let birdY = 50;
-let birdVelocity = 3;
-let birdAcceleration = 2;
+let birdVelocity = 10;
+let birdAcceleration = 5;
 
 let pipeX = 400;
 let pipeY = canvas.height - 200;
@@ -150,7 +150,7 @@ function loop(timestamp) {
     const deltaTime = timestamp - loop.previousTimestamp || 0;
     loop.previousTimestamp = timestamp;
 
-    pipeX -= 2.5 * (deltaTime / 16); // Adjust the speed based on deltaTime
+    pipeX -= 200 * (deltaTime / 16); // Adjust the speed based on deltaTime
 
     if (pipeX < -50) {
         pipeX = 400;
