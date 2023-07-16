@@ -117,45 +117,4 @@ function resetGame() {
     birdAcceleration = 0.1;
 
     pipeX = 400;
-    pipeY = canvas.height - 200;
-
-    score = 0;
-}
-
-function endGame() {
-    showEndMenu();
-}
-
-function jump() {
-    birdVelocity = FLAP_SPEED;
-}
-
-function loop() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    ctx.drawImage(flappyImg, birdX, birdY);
-
-    ctx.fillStyle = '#333';
-    ctx.fillRect(pipeX, -50, PIPE_WIDTH, pipeY);
-    ctx.fillRect(pipeX, pipeY + PIPE_GAP, PIPE_WIDTH, canvas.height - pipeY);
-
-    if (collisionCheck()) {
-        endGame();
-        return;
-    }
-
-    pipeX -= 1.5;
-
-    if (pipeX < -50) {
-        pipeX = 400;
-        pipeY = Math.random() * (canvas.height - PIPE_GAP) + PIPE_WIDTH;
-    }
-
-    birdVelocity += birdAcceleration;
-    birdY += birdVelocity;
-
-    increaseScore();
-    requestAnimationFrame(loop);
-}
-
-loop();
+    pipeY
