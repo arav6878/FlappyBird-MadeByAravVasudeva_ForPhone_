@@ -3,7 +3,7 @@ const ctx = canvas.getContext('2d');
 const gameContainer = document.getElementById('game-container');
 
 const flappyImg = new Image();
-flappyImg.src = 'assets/flappy_dunk.png';
+flappyImg.src = 'flappy_dunk.png';
 
 const FLAP_SPEED = -5;
 const BIRD_WIDTH = 40;
